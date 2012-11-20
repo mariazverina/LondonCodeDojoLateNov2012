@@ -14,7 +14,6 @@ class FibGen(object):
         while self.fib_seq[-1] < max_num:
             self.fib_seq.append(self.fib_seq[-1] + self.fib_seq[-2])
         self.cache = {}
-        self.last_position = 0
     
     def biggest_sub_number(self, num):
         return [x for x in self.fib_seq if x <= num][-1]
@@ -36,8 +35,7 @@ class FibGen(object):
         if num in self.cache:
             return self.cache[num]
 
-        if self.fib_seq[self.last_position+1] <= num or self.fib_seq[self.last_position] > num:
-            position = bisect.bisect_right(self.fib_seq, num) - 1
+        position = bisect.bisect_right(self.fib_seq, num) - 1
         self.cache[num] = 10 ** position + self.fast_zeckendorf(num - self.fib_seq[position])
 
         return self.cache[num]
